@@ -1,55 +1,55 @@
-# Восстановление регрессии
+п»ї# Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЂРµРіСЂРµСЃСЃРёРё
 
-При *Y = R* задача обучения по прецедентам называется *задачей восстановления регрессии*.
-Требуется построить функцию регрессии 
+РџСЂРё *Y = R* Р·Р°РґР°С‡Р° РѕР±СѓС‡РµРЅРёСЏ РїРѕ РїСЂРµС†РµРґРµРЅС‚Р°Рј РЅР°Р·С‹РІР°РµС‚СЃСЏ *Р·Р°РґР°С‡РµР№ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЂРµРіСЂРµСЃСЃРёРё*.
+РўСЂРµР±СѓРµС‚СЃСЏ РїРѕСЃС‚СЂРѕРёС‚СЊ С„СѓРЅРєС†РёСЋ СЂРµРіСЂРµСЃСЃРёРё 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=a:&space;X&space;\rightarrow&space;Y," target="_blank"><img src="https://latex.codecogs.com/gif.latex?a:&space;X&space;\rightarrow&space;Y," title="a: X \rightarrow Y," /></a>
 
-заданы *X - * множество объектов, *Y - * множество ответов.
+Р·Р°РґР°РЅС‹ *X - * РјРЅРѕР¶РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ, *Y - * РјРЅРѕР¶РµСЃС‚РІРѕ РѕС‚РІРµС‚РѕРІ.
 
-*Функционал качества (SSE)* определяется как сумма квадратов ошибок:
+*Р¤СѓРЅРєС†РёРѕРЅР°Р» РєР°С‡РµСЃС‚РІР° (SSE)* РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РєР°Рє СЃСѓРјРјР° РєРІР°РґСЂР°С‚РѕРІ РѕС€РёР±РѕРє:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(g(x,&space;\alpha)&space;-&space;y_i)^2," target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(g(x,&space;\alpha)&space;-&space;y_i)^2," title="Q(\alpha, X^l) = \sum_{i = 1}^{l}(g(x, \alpha) - y_i)^2," /></a>
 
-где *g - * модель регрессии (параметрическое семейство функций), 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a> - вектор параметров модели.
+РіРґРµ *g - * РјРѕРґРµР»СЊ СЂРµРіСЂРµСЃСЃРёРё (РїР°СЂР°РјРµС‚СЂРёС‡РµСЃРєРѕРµ СЃРµРјРµР№СЃС‚РІРѕ С„СѓРЅРєС†РёР№), 
+<a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a> - РІРµРєС‚РѕСЂ РїР°СЂР°РјРµС‚СЂРѕРІ РјРѕРґРµР»Рё.
 
-По методу наименьших квадратов найдем вектор параметров, при котором *SSE* минимален. Для этого производную функционала качества по вектору параметров приравняем к нулю.
+РџРѕ РјРµС‚РѕРґСѓ РЅР°РёРјРµРЅСЊС€РёС… РєРІР°РґСЂР°С‚РѕРІ РЅР°Р№РґРµРј РІРµРєС‚РѕСЂ РїР°СЂР°РјРµС‚СЂРѕРІ, РїСЂРё РєРѕС‚РѕСЂРѕРј *SSE* РјРёРЅРёРјР°Р»РµРЅ. Р”Р»СЏ СЌС‚РѕРіРѕ РїСЂРѕРёР·РІРѕРґРЅСѓСЋ С„СѓРЅРєС†РёРѕРЅР°Р»Р° РєР°С‡РµСЃС‚РІР° РїРѕ РІРµРєС‚РѕСЂСѓ РїР°СЂР°РјРµС‚СЂРѕРІ РїСЂРёСЂР°РІРЅСЏРµРј Рє РЅСѓР»СЋ.
 
- # Формула Надарая-Ватсона
+ # Р¤РѕСЂРјСѓР»Р° РќР°РґР°СЂР°СЏ-Р’Р°С‚СЃРѕРЅР°
 
-Возьмем в качестве модели регрессии константу: 
+Р’РѕР·СЊРјРµРј РІ РєР°С‡РµСЃС‚РІРµ РјРѕРґРµР»Рё СЂРµРіСЂРµСЃСЃРёРё РєРѕРЅСЃС‚Р°РЅС‚Сѓ: 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=a(x)&space;=&space;g(x,&space;\alpha)&space;=&space;\alpha,&space;\alpha&space;\in&space;R." target="_blank"><img src="https://latex.codecogs.com/gif.latex?a(x)&space;=&space;g(x,&space;\alpha)&space;=&space;\alpha,&space;\alpha&space;\in&space;R." title="a(x) = g(x, \alpha) = \alpha, \alpha \in R." /></a>
 
-Значение *a(x)* вычисляется для каждого *x* по нескольким ближайшим к нему объектам, при этом вводятся веса объектов *w(x)* (зависят от того *x*, в котором собираемся вычислять alpha).
-Веса задаются так, чтобы они убывали с увеличением расстояния от *x* до остальных объектов. Для этого вводим функцию ядра (невозрастающую, гладкую, ограниченную):
+Р—РЅР°С‡РµРЅРёРµ *a(x)* РІС‹С‡РёСЃР»СЏРµС‚СЃСЏ РґР»СЏ РєР°Р¶РґРѕРіРѕ *x* РїРѕ РЅРµСЃРєРѕР»СЊРєРёРј Р±Р»РёР¶Р°Р№С€РёРј Рє РЅРµРјСѓ РѕР±СЉРµРєС‚Р°Рј, РїСЂРё СЌС‚РѕРј РІРІРѕРґСЏС‚СЃСЏ РІРµСЃР° РѕР±СЉРµРєС‚РѕРІ *w(x)* (Р·Р°РІРёСЃСЏС‚ РѕС‚ С‚РѕРіРѕ *x*, РІ РєРѕС‚РѕСЂРѕРј СЃРѕР±РёСЂР°РµРјСЃСЏ РІС‹С‡РёСЃР»СЏС‚СЊ alpha).
+Р’РµСЃР° Р·Р°РґР°СЋС‚СЃСЏ С‚Р°Рє, С‡С‚РѕР±С‹ РѕРЅРё СѓР±С‹РІР°Р»Рё СЃ СѓРІРµР»РёС‡РµРЅРёРµРј СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РѕС‚ *x* РґРѕ РѕСЃС‚Р°Р»СЊРЅС‹С… РѕР±СЉРµРєС‚РѕРІ. Р”Р»СЏ СЌС‚РѕРіРѕ РІРІРѕРґРёРј С„СѓРЅРєС†РёСЋ СЏРґСЂР° (РЅРµРІРѕР·СЂР°СЃС‚Р°СЋС‰СѓСЋ, РіР»Р°РґРєСѓСЋ, РѕРіСЂР°РЅРёС‡РµРЅРЅСѓСЋ):
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=w_i&space;=&space;K&space;\left&space;(\frac{\rho&space;(x,&space;x_i)}{h}&space;\right&space;)." target="_blank"><img src="https://latex.codecogs.com/gif.latex?w_i&space;=&space;K&space;\left&space;(\frac{\rho&space;(x,&space;x_i)}{h}&space;\right&space;)." title="w_i = K \left (\frac{\rho (x, x_i)}{h} \right )." /></a>
 
-*h* называется *шириной окна*.
+*h* РЅР°Р·С‹РІР°РµС‚СЃСЏ *С€РёСЂРёРЅРѕР№ РѕРєРЅР°*.
 
-Решаем задачу методом наименьших квадратов.
+Р РµС€Р°РµРј Р·Р°РґР°С‡Сѓ РјРµС‚РѕРґРѕРј РЅР°РёРјРµРЅСЊС€РёС… РєРІР°РґСЂР°С‚РѕРІ.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}w_i&space;(\alpha&space;-&space;y_i)^2&space;\rightarrow&space;\min\limits_{\alpha}," target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}w_i&space;(\alpha&space;-&space;y_i)^2&space;\rightarrow&space;\min\limits_{\alpha}," title="Q(\alpha, X^l) = \sum_{i = 1}^{l}w_i (\alpha - y_i)^2 \rightarrow \min\limits_{\alpha}," /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;Q}{\partial&space;\alpha}&space;=&space;0." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;Q}{\partial&space;\alpha}&space;=&space;0." title="\frac{\partial Q}{\partial \alpha} = 0." /></a>
 
-Получим *формулу Надарая-Ватсона:*
+РџРѕР»СѓС‡РёРј *С„РѕСЂРјСѓР»Сѓ РќР°РґР°СЂР°СЏ-Р’Р°С‚СЃРѕРЅР°:*
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha_h&space;(x,&space;X^l)&space;=&space;\frac{\sum\limits_{i&space;=&space;1}^{l}&space;y_i&space;w_i(x)}{\sum\limits_{i&space;=&space;1}^{l}&space;w_i(x)}." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha_h&space;(x,&space;X^l)&space;=&space;\frac{\sum\limits_{i&space;=&space;1}^{l}&space;y_i&space;w_i(x)}{\sum\limits_{i&space;=&space;1}^{l}&space;w_i(x)}." title="\alpha_h (x, X^l) = \frac{\sum\limits_{i = 1}^{l} y_i w_i(x)}{\sum\limits_{i = 1}^{l} w_i(x)}." /></a>
 
-Чтобы подобрать оптимальное *h*, воспользуемся скользящим контролем с исключением объектов по одному ( *LOO* ):
+Р§С‚РѕР±С‹ РїРѕРґРѕР±СЂР°С‚СЊ РѕРїС‚РёРјР°Р»СЊРЅРѕРµ *h*, РІРѕСЃРїРѕР»СЊР·СѓРµРјСЃСЏ СЃРєРѕР»СЊР·СЏС‰РёРј РєРѕРЅС‚СЂРѕР»РµРј СЃ РёСЃРєР»СЋС‡РµРЅРёРµРј РѕР±СЉРµРєС‚РѕРІ РїРѕ РѕРґРЅРѕРјСѓ ( *LOO* ):
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=LOO(h,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(\alpha_h(x_i,&space;\{X^l\backslash&space;x_i\})&space;-&space;y_i)^2&space;\rightarrow&space;\min\limits_h&space;." target="_blank"><img src="https://latex.codecogs.com/gif.latex?LOO(h,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(\alpha_h(x_i,&space;\{X^l\backslash&space;x_i\})&space;-&space;y_i)^2&space;\rightarrow&space;\min\limits_h&space;." title="LOO(h, X^l) = \sum_{i = 1}^{l}(\alpha_h(x_i, \{X^l\backslash x_i\}) - y_i)^2 \rightarrow \min\limits_h ." /></a>
 
 
-Реализация.
+Р РµР°Р»РёР·Р°С†РёСЏ.
 
-Создан класс *NonparamRegression*, полями которого являются обучающая выборка, ширина окна и ядро. 
-Ширина окна подбирается с помощью LOO при создании объекта класса.
+РЎРѕР·РґР°РЅ РєР»Р°СЃСЃ *NonparamRegression*, РїРѕР»СЏРјРё РєРѕС‚РѕСЂРѕРіРѕ СЏРІР»СЏСЋС‚СЃСЏ РѕР±СѓС‡Р°СЋС‰Р°СЏ РІС‹Р±РѕСЂРєР°, С€РёСЂРёРЅР° РѕРєРЅР° Рё СЏРґСЂРѕ. 
+РЁРёСЂРёРЅР° РѕРєРЅР° РїРѕРґР±РёСЂР°РµС‚СЃСЏ СЃ РїРѕРјРѕС‰СЊСЋ LOO РїСЂРё СЃРѕР·РґР°РЅРёРё РѕР±СЉРµРєС‚Р° РєР»Р°СЃСЃР°.
 
-Для аппроксимации функции регрессии в одной точке испольмуется метод *predict*:
+Р”Р»СЏ Р°РїРїСЂРѕРєСЃРёРјР°С†РёРё С„СѓРЅРєС†РёРё СЂРµРіСЂРµСЃСЃРёРё РІ РѕРґРЅРѕР№ С‚РѕС‡РєРµ РёСЃРїРѕР»СЊРјСѓРµС‚СЃСЏ РјРµС‚РѕРґ *predict*:
 
 ```python
     def predict(self, test_point):
@@ -63,12 +63,13 @@
             return numerator / denominator  # alpha
 ```  
 
-Для тестирования программы использовалась выборка *boston*, где предсказывается стоимость жилья в зависимости от различных характеристик расположения.
-Использовались квартическое и гауссовское ядра. Сравним их.
+Р”Р»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ РїСЂРѕРіСЂР°РјРјС‹ РёСЃРїРѕР»СЊР·РѕРІР°Р»Р°СЃСЊ РІС‹Р±РѕСЂРєР° *boston*, РіРґРµ РїСЂРµРґСЃРєР°Р·С‹РІР°РµС‚СЃСЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р¶РёР»СЊСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂР°Р·Р»РёС‡РЅС‹С… С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ.
+РСЃРїРѕР»СЊР·РѕРІР°Р»РёСЃСЊ РєРІР°СЂС‚РёС‡РµСЃРєРѕРµ Рё РіР°СѓСЃСЃРѕРІСЃРєРѕРµ СЏРґСЂР°. РЎСЂР°РІРЅРёРј РёС….
 
 <table><tr>
-<th>Ядро</th><th>SSE</th><th>h оптимальное</th>
-</tr><tr><td>Квартическое</td><td>17411</td><td>0.55</td>
-</tr><tr><tr><td>Гауссовское</td><td>17316</td><td>0.2</td>
+<th>РЇРґСЂРѕ</th><th>SSE</th><th>h РѕРїС‚РёРјР°Р»СЊРЅРѕРµ</th>
+</tr><tr><td>РљРІР°СЂС‚РёС‡РµСЃРєРѕРµ</td><td>17411</td><td>0.55</td>
+</tr><tr><tr><td>Р“Р°СѓСЃСЃРѕРІСЃРєРѕРµ</td><td>17316</td><td>0.2</td>
 </tr></table>
 
+![alt text](https://github.com/elena111111/MachineLearning/blob/master/nad_wat.png)
