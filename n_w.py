@@ -7,7 +7,7 @@ class NonparamRegression:
         self.ker = ker
         self.X = X
         self.Y = Y
-        self.h = self.__find_h_opt(0.01, round((X.max() - X.min()) / 4), round((X.max() - X.min()) / X.shape[0], 2))
+        self.h = self.__find_h_opt(0.01, round((X.max() - X.min()) / 3), round((X.max() - X.min()) / X.shape[0], 2))
 
     def __e_dist(self, u, v):
         return math.sqrt((u - v) ** 2)
@@ -21,16 +21,19 @@ class NonparamRegression:
     def __find_h_opt(self, min_h, max_h, step_h):
         loo_min = 50000
         plt.figure()
-        for h in np.arange(min_h, max_h, step_h):
+        СurLoo = []
+        H = np.arange(min_h, max_h, step_h)
+        for h in H:
             cur_loo = self.__loo(h)
-            plt.plot(h, cur_loo, linewidth=2, color='orange')
-            plt.xlabel('h')
-            plt.ylabel('loo')
+            СurLoo.append(cur_loo)
             print("loo: " + str(cur_loo))
             print("h: " + str(h))
             if cur_loo < loo_min:
                 loo_min = cur_loo
                 h_opt = h
+        plt.plot(H, СurLoo, linewidth=2, color='orange')
+        plt.xlabel('h')
+        plt.ylabel('loo')
         print("h_opt: " + str(h_opt))
         print("loo_min: " + str(loo_min))
         plt.title("Подбор ширины окна для непараметрической регрессии (оптимальное h = %f)" % h_opt)
@@ -62,3 +65,9 @@ class NonparamRegression:
             return 0
         else:
             return numerator / denominator  # alpha
+
+    def sse(self):  #функционал качества
+        SSE = 0
+        for i in range(self.X.shape[0]):
+            SSE += (self.predict(self.X[i]) - self.Y[i])**2
+        return SSE

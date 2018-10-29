@@ -17,12 +17,12 @@ j = 5   #номер признака
 X = datasets.load_boston().data[:, j]
 Y = datasets.load_boston().target
 step = (X.max() - X.min()) / X.shape[0]
-ker = ker_gauss
+ker = ker_quart
 nr = NonparamRegression(X, Y, ker)
 
 task = np.arange(X.min(), X.max(), step)
 plt.figure()
-plt.xlim(task.min(), task.max() + 1)
+plt.xlim(task.min(), task.max())
 plt.ylim(Y.min(), Y.max() + 1)
 
 plt.plot(X, Y, 'r.', markersize=2, color='black')
@@ -33,6 +33,8 @@ plt.plot(task, alpha, linewidth=2, color='blue')
 plt.title("Непараметрическая регрессия (выборка \"Бостон\" по %i признаку, h = %f, кварт. ядро)" % (j, nr.get_h()))
 plt.legend(('Обучающая выборка', 'Результат'), loc='upper left')
 plt.show()
+
+print("sse: " + str(nr.sse()))
 
 
 
