@@ -3,15 +3,13 @@
 При *Y = R* задача обучения по прецедентам называется *задачей восстановления регрессии*.
 Требуется построить функцию регрессии 
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=a:&space;X&space;\rightarrow&space;Y," target="_blank"><img src="https://latex.codecogs.com/gif.latex?a:&space;X&space;\rightarrow&space;Y," title="a: X \rightarrow Y," /></a>
-
-заданы *X - * множество объектов, *Y - * множество ответов.
+<a href="https://www.codecogs.com/eqnedit.php?latex=a:&space;X&space;\rightarrow&space;Y," target="_blank"><img src="https://latex.codecogs.com/gif.latex?a:&space;X&space;\rightarrow&space;Y," title="a: X \rightarrow Y," /></a> где заданы *X* - множество объектов, *Y* - множество ответов.
 
 *Функционал качества (SSE)* определяется как сумма квадратов ошибок:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(g(x,&space;\alpha)&space;-&space;y_i)^2," target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(g(x,&space;\alpha)&space;-&space;y_i)^2," title="Q(\alpha, X^l) = \sum_{i = 1}^{l}(g(x, \alpha) - y_i)^2," /></a>
 
-где *g - * модель регрессии (параметрическое семейство функций), 
+где *g* - модель регрессии (параметрическое семейство функций), 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a> - вектор параметров модели.
 
 По методу наименьших квадратов найдем вектор параметров, при котором *SSE* минимален. Для этого производную функционала качества по вектору параметров приравняем к нулю.
