@@ -57,7 +57,6 @@ class NonparamRegression:
             return numerator / denominator  # alpha
 
     def predict(self, test_point):  #классифицирует одну точку
-        numerator, denominator = 0, 0
         return self._predict(test_point, self.X, self.Y, self.h, self.ker)
 
     def sse(self):  #функционал качества
