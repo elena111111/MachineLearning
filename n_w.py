@@ -7,9 +7,9 @@ class NonparamRegression:
         self.ker = ker
         self.X = X
         self.Y = Y
-        self.h = self.__find_h_opt(0.01, round((X.max() - X.min()) / 3), round((X.max() - X.min()) / X.shape[0], 2))
+        self.h = self._find_h_opt(0.01, round((X.max() - X.min()) / 3), round((X.max() - X.min()) / X.shape[0], 2))
 
-    def __e_dist(self, u, v):
+    def _e_dist(self, u, v):
         return math.sqrt((u - v) ** 2)
 
     def get_h(self):
@@ -18,13 +18,13 @@ class NonparamRegression:
     def set_h(self, h):
         self.h = h
 
-    def __find_h_opt(self, min_h, max_h, step_h):
+    def _find_h_opt(self, min_h, max_h, step_h):
         loo_min = 50000
         plt.figure()
         СurLoo = []
         H = np.arange(min_h, max_h, step_h)
         for h in H:
-            cur_loo = self.__loo(h)
+            cur_loo = self._loo(h)
             СurLoo.append(cur_loo)
             print("loo: " + str(cur_loo))
             print("h: " + str(h))
@@ -40,17 +40,17 @@ class NonparamRegression:
         plt.show()
         return h_opt
 
-    def __loo(self, h):
+    def _loo(self, h):
         res = 0
         for i in range(self.X.shape[0]):
-            res += (self.__predict_for_loo(self.X[i], np.delete(self.X, [i]), np.delete(self.Y, [i]), h, self.ker) - self.Y[i]) ** 2
+            res += (self._predict(self.X[i], np.delete(self.X, [i]), np.delete(self.Y, [i]), h, self.ker) - self.Y[i]) ** 2
         return res
 
-    def __predict_for_loo(self, test_point, X, Y, h, ker):  #классифицирует одну точку
+    def _predict(self, test_point, X, Y, h, ker):  #классифицирует одну точку
         numerator, denominator = 0, 0
         for i in range(X.shape[0]):
-            numerator += Y[i] * ker(self.__e_dist(test_point, X[i]) / h)
-            denominator += ker(self.__e_dist(test_point, X[i]) / h)
+            numerator += Y[i] * ker(self._e_dist(test_point, X[i]) / h)
+            denominator += ker(self._e_dist(test_point, X[i]) / h)
         if denominator == 0:
             return 0
         else:
@@ -58,13 +58,7 @@ class NonparamRegression:
 
     def predict(self, test_point):  #классифицирует одну точку
         numerator, denominator = 0, 0
-        for i in range(self.X.shape[0]):
-            numerator += self.Y[i] * self.ker(self.__e_dist(test_point, self.X[i]) / self.h)
-            denominator += self.ker(self.__e_dist(test_point, self.X[i]) / self.h)
-        if denominator == 0:
-            return 0
-        else:
-            return numerator / denominator  # alpha
+        return self._predict(test_point, self.X, self.Y, self.h, self.ker)
 
     def sse(self):  #функционал качества
         SSE = 0
