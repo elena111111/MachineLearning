@@ -61,7 +61,7 @@
             return numerator / denominator  # alpha
 ```  
 
-Для тестирования программы использовалась выборка *boston*, где предсказывается стоимость жилья в зависимости от различных характеристик расположения.
+Для тестирования программы использовалась выборка *boston*, где предсказывается стоимость жилья в зависимости от различных характеристик расположения (в нашем примере 5-му признаку соответствует среднее количество комнат в доме).
 Использовались квартическое и гауссовское ядра. Сравним их.
 
 <table><tr>
@@ -74,7 +74,7 @@
 
 # LOWESS - локально взвешенное сглаживание
 
-Линия регрессии, полученная по формула Надарая-Ватсона, довольно чувствителен к выбросам.
+Линия регрессии, полученная по формула Надарая-Ватсона, довольно чувствительна к выбросам.
 Поэтому добавим для каждого объекта величину ошибки 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\varepsilon_i&space;=&space;|a_h(x_i,&space;X^l\backslash\{x_i\})&space;-&space;y_i|," target="_blank"><img src="https://latex.codecogs.com/gif.latex?\varepsilon_i&space;=&space;|\alpha_h(x_i,&space;X^l\backslash\{x_i\})&space;-&space;y_i|," title="\varepsilon_i = |\alpha_h(x_i, X^l\backslash\{x_i\}) - y_i|," /></a>
@@ -90,6 +90,7 @@
 1) инициализируем все <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma_i&space;=&space;1" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma_i&space;=&space;1" title="\gamma_i = 1" /></a>  
 2) до тех пор, пока <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma_i" title="\gamma_i" /></a> не стабилизируются,  
 вычислить *loo* и изменить *gamma* 
+
 <a href="https://www.codecogs.com/eqnedit.php?latex=a_i&space;=&space;a_h(x_i,&space;X^l\backslash\{x_i\})&space;=&space;\frac{\sum\limits_{i&space;=&space;1,&space;i&space;\neq&space;j}^{l}&space;y_j&space;\gamma_j&space;K(\frac{\rho&space;(x_i,&space;x_j))}{h})}{\sum\limits_{i&space;=&space;1,&space;i&space;\neq&space;j}^{l}&space;\gamma_j&space;K(\frac{\rho&space;(x_i,&space;x_j))}{h})}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?a_i&space;=&space;a_h(x_i,&space;X^l\backslash\{x_i\})&space;=&space;\frac{\sum\limits_{i&space;=&space;1,&space;i&space;\neq&space;j}^{l}&space;y_j&space;\gamma_j&space;K(\frac{\rho&space;(x_i,&space;x_j))}{h})}{\sum\limits_{i&space;=&space;1,&space;i&space;\neq&space;j}^{l}&space;\gamma_j&space;K(\frac{\rho&space;(x_i,&space;x_j))}{h})}" title="a_i = a_h(x_i, X^l\backslash\{x_i\}) = \frac{\sum\limits_{i = 1, i \neq j}^{l} y_j \gamma_j K(\frac{\rho (x_i, x_j))}{h})}{\sum\limits_{i = 1, i \neq j}^{l} \gamma_j K(\frac{\rho (x_i, x_j))}{h})}" /></a>   
 <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma&space;_i&space;=&space;\tilde{K}(|a_i&space;-&space;y_i|)." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma&space;_i&space;=&space;\tilde{K}(|a_i&space;-&space;y_i|)." title="\gamma _i = \tilde{K}(|a_i - y_i|)." /></a>
 
