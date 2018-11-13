@@ -71,3 +71,18 @@
 </tr></table>
 
 ![alt text](https://github.com/elena111111/MachineLearning/blob/master/nad_wat.png)
+
+/*тут будет немного теории и кода*/
+
+# LOWESS - локально взвешенное сглаживание
+
+Для тестирования программы использовалась подвыборка выборки *boston* и квартическое ядро.
+Сравним алгоритм с предыдущим.
+<table><tr>
+<th>Алгоритм</th><th>SSE</th><th>h оптимальное</th>
+</tr><tr><td>Над-Ват</td><td>873.187</td><td>0.91</td>
+</tr><tr><tr><td>LOWESS</td><td>928.710</td><td>1.18</td>
+</tr></table>
+
+На графике мы видим, что линия регрессии стала более гладкой и менее чувствительной к выбросам.
+![alt text](https://github.com/elena111111/MachineLearning/blob/master/lowess.png)
