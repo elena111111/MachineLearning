@@ -205,6 +205,18 @@ SSE (для всех признаков): 1263983.1562554843
 
 # Гребневая регрессия
 
+Помогает решить проблему мультиколлинеарности. Для этого добавим к функционалу *Q* регуляризатор, штрафующий большие значения нормы вектора весов <a href="https://www.codecogs.com/eqnedit.php?latex=||\alpha||" target="_blank"><img src="https://latex.codecogs.com/gif.latex?||\alpha||" title="||\alpha||" /></a>,  
+<a href="https://www.codecogs.com/eqnedit.php?latex=Q_\tau(\alpha)&space;=&space;||F&space;\alpha&space;-&space;y||^2&space;&plus;&space;\tau||\alpha||^2,&space;\tau&space;\geqslant&space;0." target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q_\tau(\alpha)&space;=&space;||F&space;\alpha&space;-&space;y||^2&space;&plus;&space;\tau||\alpha||^2,&space;\tau&space;\geqslant&space;0." title="Q_\tau(\alpha) = ||F \alpha - y||^2 + \tau||\alpha||^2, \tau \geqslant 0." /></a>
+
+Перед обращением матрицы к ней добавляется "гребень" - диагональная матрица <a href="https://www.codecogs.com/eqnedit.php?latex=\tau&space;I_n/." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\tau&space;I_n/." title="\tau I_n/." /></a>
+Используя регуляризатор, мы хотим выбрать решение с минимальной нормой. Поскольку В случае мультиколлинеарности имеется бесконечно много векторов <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a>, доставляющих функционалу *Q* значения, близкие к минимальному.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=Q_\tau(\alpha)&space;=&space;0&space;=>&space;\alpha^*&space;=&space;(F^TF&space;+&space;\tau&space;I_n)^{-1}&space;F^Ty." target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q_\tau(\alpha)&space;=&space;0&space;=>&space;\alpha^*&space;=&space;(F^TF&space;-&space;\tau&space;I_n)^{-1}&space;F^Ty." title="Q_\tau(\alpha) = 0 => \alpha^* = (F^TF - \tau I_n)^{-1} F^Ty." /></a>
+
+То же самое через сингулярное разложение:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\alpha^*&space;=&space;U(D^2&space;&plus;&space;\tau&space;I_n)^{-1}&space;DV^Ty." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha^*&space;=&space;U(D^2&space;&plus;&space;\tau&space;I_n)^{-1}&space;DV^Ty." title="\alpha^* = U(D^2 + \tau I_n)^{-1} DV^Ty." /></a>
+
 Реализация. 
 
 Создан класс *LinearRegression*, которому в конструкторе передается обучающая выборка, и из конструктора вызывается метод *find_tau*, и затем *find_alpha*:
