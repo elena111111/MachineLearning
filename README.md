@@ -351,13 +351,23 @@ def _find_alpha(self):
 
 # Нелинейная модель регрессии
 
+Пусть задана <a href="https://www.codecogs.com/eqnedit.php?latex=f(x,&space;\alpha)&space;-" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(x,&space;\alpha)&space;-" title="f(x, \alpha) -" /></a> нелинейная модель регрессии, и нужно минимизировать функционал качества *Q* по <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha&space;\in&space;\mathbb{R}^p." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha&space;\in&space;\mathbb{R}^p." title="\alpha \in \mathbb{R}^p." /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(&space;f(x_i,\alpha)&space;-&space;y_i&space;)^2." target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q(\alpha,&space;X^l)&space;=&space;\sum_{i&space;=&space;1}^{l}(&space;f(x_i,\alpha)&space;-&space;y_i&space;)^2." title="Q(\alpha, X^l) = \sum_{i = 1}^{l}( f(x_i,\alpha) - y_i )^2." /></a>
+
+Используем метод Ньтона-Рафсона. Выбираем начальное приближение для *alpha*.  
+<a href="https://www.codecogs.com/eqnedit.php?latex=\alpha^{t&plus;1}&space;=&space;\alpha^t&space;-&space;h_t(Q^{''}(\alpha^t))^{-1}Q^{'}(\alpha^t)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha^{t&plus;1}&space;=&space;\alpha^t&space;-&space;h_t(Q^{''}(\alpha^t))^{-1}Q^{'}(\alpha^t)," title="\alpha^{t+1} = \alpha^t - h_t(Q^{''}(\alpha^t))^{-1}Q^{'}(\alpha^t)," /></a>  
+где <a href="https://www.codecogs.com/eqnedit.php?latex=Q^{''}(\alpha^t),&space;Q^{'}(\alpha^t),&space;h_t&space;-" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Q^{''}(\alpha^t),&space;Q^{'}(\alpha^t),&space;h_t&space;-" title="Q^{''}(\alpha^t), Q^{'}(\alpha^t), h_t -" /></a> 
+градиент, гессиан, шаг соответственно.  
+Повторяем, пока *Q* не стабилизируется.
+
 Реализация.
 
 Создан класс *NonlinearRegression*, конструктор:  
 ```python
 def __init__(self, X, Y, f)
 ```
-X, Y - обучающая выборка, f - функция (модель). Еще задается шаг *h*, начальное приближение для *alpha* и подбираем *alpha*:  
+X, Y - обучающая выборка, f - функция (модель). Еще задается шаг *h*, начальное приближение для *alpha* и подбираем *alpha*  
+  
 ```python
     def _find_alpha(self):
         eps = 0.001
@@ -372,5 +382,7 @@ X, Y - обучающая выборка, f - функция (модель). Е�
         return self.alpha
 ```
 Визуализация:
+![alt text](https://github.com/elena111111/MachineLearning/blob/master/NonlinReg_cos.png)
 
-# Картинка
+*SSE*: 2.04263507.  
+*alpha*: 1.17669246.
