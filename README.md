@@ -345,7 +345,7 @@ def _find_alpha(self):
 
 Пример работы:
 
-# картинка
+![alt text](https://github.com/elena111111/MachineLearning/blob/master/pca_m_boston.png)
 
 В данном случае можно сократить количество признаков до 2 или 3.
 
@@ -353,3 +353,24 @@ def _find_alpha(self):
 
 Реализация.
 
+Создан класс *NonlinearRegression*, конструктор:  
+```python
+def __init__(self, X, Y, f)
+```
+X, Y - обучающая выборка, f - функция (модель). Еще задается шаг *h*, начальное приближение для *alpha* и подбираем *alpha*:  
+```python
+    def _find_alpha(self):
+        eps = 0.001
+        cur_Q = self._Q(self.alpha) + eps + 10
+        while abs(cur_Q - self._Q(self.alpha)) > eps:
+            print("alpha: " + str(self.alpha))
+            print("Q: " + str(cur_Q))
+            self._find_grad()
+            self._find_hessian_inv()
+            cur_Q = self._Q(self.alpha)
+            self.alpha = self.alpha - np.dot(np.dot(self.h, self.hessian_inv), self.grad)
+        return self.alpha
+```
+Визуализация:
+
+# Картинка
