@@ -280,4 +280,76 @@ def _find_alpha(self):
 </tr><tr><td>Гребневая регрессия + SVD</td><td>*boston*, 4, 6, 175.05</td><td>44225.39054893582</td><td>[ 22.48858026 -7.9524389  28.74538325]</td><td>0.9951</td><td>44373.737437263015</td>
 </tr></table>
 
+# Метод главных компонент (PCA)
+
+Используется для решения проблемы мультиколлинеарности. Используется, чтобы преобразовать исходные признаки, и получить новые признаки, гаратировав их линейную независимость, и возможно уменьшив размерность задачи.
+Также может быть удобен для наглядной визуализации данных в 3х-мерном пространстве.
+
+В методе главных компонент строится минимальное число новых признаков, по которым исходные признаки восстанавливаются линейным преобразованием с минимальными погрешностями.
+Относится к методам обучения без учителя.
+
+Пусть объекты задаются их признаковым описанием:
+<a href="https://www.codecogs.com/eqnedit.php?latex=x_i&space;=&space;(f_1(x_i),&space;\dots,&space;f_n(x_i)),&space;i&space;=&space;\overline{1,&space;l}." target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_i&space;=&space;(f_1(x_i),&space;\dots,&space;f_n(x_i)),&space;i&space;=&space;\overline{1,&space;l}." title="x_i = (f_1(x_i), \dots, f_n(x_i)), i = \overline{1, l}." /></a>
+Матрица признаков:  
+<a href="https://www.codecogs.com/eqnedit.php?latex=F_{(l,&space;n)}&space;=&space;\bigl(\begin{smallmatrix}&space;f_1(x_1)&space;&&space;\dots&space;&&space;f_n(x_1)\\&space;\dots&space;&&space;\dots&space;&&space;\dots\\&space;f_1(x_l)&space;&&space;\dots&space;&&space;f_n(x_l)&space;\end{smallmatrix}\bigr)&space;=&space;\begin{pmatrix}&space;x_1\\&space;\dots\\&space;x_l&space;\end{pmatrix}&space;." target="_blank"><img src="https://latex.codecogs.com/gif.latex?F_{(l,&space;n)}&space;=&space;\bigl(\begin{smallmatrix}&space;f_1(x_1)&space;&&space;\dots&space;&&space;f_n(x_1)\\&space;\dots&space;&&space;\dots&space;&&space;\dots\\&space;f_1(x_l)&space;&&space;\dots&space;&&space;f_n(x_l)&space;\end{smallmatrix}\bigr)&space;=&space;\begin{pmatrix}&space;x_1\\&space;\dots\\&space;x_l&space;\end{pmatrix}&space;." title="F_{(l, n)} = \bigl(\begin{smallmatrix} f_1(x_1) & \dots & f_n(x_1)\\ \dots & \dots & \dots\\ f_1(x_l) & \dots & f_n(x_l) \end{smallmatrix}\bigr) = \begin{pmatrix} x_1\\ \dots\\ x_l \end{pmatrix} ." /></a>
+
+Матрица признаков в новом пространстве, *m < n*:  
+<a href="https://www.codecogs.com/eqnedit.php?latex=G_{(l,&space;m)}&space;=&space;\bigl(\begin{smallmatrix}&space;g_1(x_1)&space;&&space;\dots&space;&&space;g_m(x_1)\\&space;\dots&space;&&space;\dots&space;&&space;\dots\\&space;g_1(x_l)&space;&&space;\dots&space;&&space;g_m(x_l)&space;\end{smallmatrix}\bigr)&space;=&space;\begin{pmatrix}&space;z_1\\&space;\dots\\&space;z_l&space;\end{pmatrix}&space;." target="_blank"><img src="https://latex.codecogs.com/gif.latex?G_{(l,&space;m)}&space;=&space;\bigl(\begin{smallmatrix}&space;g_1(x_1)&space;&&space;\dots&space;&&space;g_m(x_1)\\&space;\dots&space;&&space;\dots&space;&&space;\dots\\&space;g_1(x_l)&space;&&space;\dots&space;&&space;g_m(x_l)&space;\end{smallmatrix}\bigr)&space;=&space;\begin{pmatrix}&space;z_1\\&space;\dots\\&space;z_l&space;\end{pmatrix}&space;." title="G_{(l, m)} = \bigl(\begin{smallmatrix} g_1(x_1) & \dots & g_m(x_1)\\ \dots & \dots & \dots\\ g_1(x_l) & \dots & g_m(x_l) \end{smallmatrix}\bigr) = \begin{pmatrix} z_1\\ \dots\\ z_l \end{pmatrix} ." /></a>
+
+Требуем, чтобы исходные признаковые описания можно было восстановить с помощью матрицы линейного преобразования <a href="https://www.codecogs.com/eqnedit.php?latex=U_{(n,&space;m)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{(n,&space;m)}" title="U_{(n, m)}" /></a>:  
+<a href="https://www.codecogs.com/eqnedit.php?latex=\widehat{f_j(x)}&space;=&space;\sum_{s&space;=&space;1}^{m}g_s(x)&space;u_{js},&space;j&space;=&space;\overline{1,&space;n}." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\widehat{f_j(x)}&space;=&space;\sum_{s&space;=&space;1}^{m}g_s(x)&space;u_{js},&space;j&space;=&space;\overline{1,&space;n}." title="\widehat{f_j(x)} = \sum_{s = 1}^{m}g_s(x) u_{js}, j = \overline{1, n}." /></a> Или <a href="https://www.codecogs.com/eqnedit.php?latex=\widehat{x}&space;=&space;zU^T" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\widehat{x}&space;=&space;zU^T" title="\widehat{x} = zU^T" /></a>.
+
+Число главных компонент *m* (эффективную размерность задачи) можно найти так:  
+упорядочить поо убыванию собственные числа матрицы 
+<a href="https://www.codecogs.com/eqnedit.php?latex=F^TF:&space;\lambda_1&space;\geqslant&space;\dots&space;\geqslant&space;\lambda_n," target="_blank"><img src="https://latex.codecogs.com/gif.latex?F^TF:&space;\lambda_1&space;\geqslant&space;\dots&space;\geqslant&space;\lambda_n," title="F^TF: \lambda_1 \geqslant \dots \geqslant \lambda_n," /></a>
+задать число <a href="https://www.codecogs.com/eqnedit.php?latex=\epsilon&space;\in&space;[0,&space;1]," target="_blank"><img src="https://latex.codecogs.com/gif.latex?\epsilon&space;\in&space;[0,&space;1]," title="\epsilon \in [0, 1]," /></a>
+найти наименьшее целое *m*, удовлетворяющее условию:  
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=E(m)&space;=&space;\frac{\lambda_{m&plus;1}&space;&plus;&space;\dots&space;&plus;&space;\lambda_n}{\lambda_{1}&space;&plus;&space;\dots&space;&plus;&space;\lambda_n}&space;\leqslant&space;\epsilon." target="_blank"><img src="https://latex.codecogs.com/gif.latex?E(m)&space;=&space;\frac{\lambda_{m&plus;1}&space;&plus;&space;\dots&space;&plus;&space;\lambda_n}{\lambda_{1}&space;&plus;&space;\dots&space;&plus;&space;\lambda_n}&space;\leqslant&space;\epsilon." title="E(m) = \frac{\lambda_{m+1} + \dots + \lambda_n}{\lambda_{1} + \dots + \lambda_n} \leqslant \epsilon." /></a>  
+
+Величина *E(m)* показывает, какая доля информации теряется при замене признаковых описаний на более короткие. При поиске *m* можно также прибегать к критерию "крутого обрыва": 
+выбирать то *m*, где *E(m - 1) >> E(M)*.
+
+Реализация.
+
+Конструктор (вход - матрица признаков):
+```python
+    def __init__(self, X):
+        self.X = X
+        v, w = la.eig(np.dot(np.transpose(self.X), self.X)) #собств знач и векторы
+        self.Eigens = np.column_stack((np.asarray(v), np.asarray(w)))
+        self.Eigens = np.asarray(sorted(self.Eigens, key=lambda x: x[0], reverse=True))
+        self._find_m()
+        self.U = self.Eigens[:, 1:(self.m + 1)]
+        self.G = np.dot(self.X, self.U)
+```
+
+Подбор эффективной размерности:  
+```python
+    def _find_m(self):
+        eig_val = self.Eigens[:, 0]
+        eps = np.arange(0., 0.9999, 0.005)
+        denom = sum(eig_val)
+        best_Em, best_Eps = 10, 10
+        for e in eps:
+            m, Em = 1, e + 1.
+            Em1 = Em
+            while Em > e:
+                numer = sum(eig_val[(m + 1):])
+                Em = numer / denom
+                if Em < best_Em:
+                    best_Eps, best_Em = e, Em
+                m += 1
+                Em1 = Em
+```
+
+Пример работы:
+
+# картинка
+
+В данном случае можно сократить количество признаков до 2 или 3.
+
+# Нелинейная модель регрессии
+
+Реализация.
 
